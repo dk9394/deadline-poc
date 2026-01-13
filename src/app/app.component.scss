@@ -1,0 +1,13 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+
+  h1 {
+    margin-bottom: 2rem;
+    color: #333;
+  }
+}
