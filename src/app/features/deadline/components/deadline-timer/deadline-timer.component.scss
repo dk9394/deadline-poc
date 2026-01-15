@@ -1,0 +1,27 @@
+.deadline-timer {
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+
+  &.loading {
+    background-color: #f0f0f0;
+    color: #666;
+  }
+
+  &.running {
+    background-color: #e3f2fd;
+    color: #1565c0;
+  }
+
+  &.timeout {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+
+  .message {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+}

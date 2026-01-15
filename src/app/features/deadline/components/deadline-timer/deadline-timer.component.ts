@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Input,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -16,7 +17,7 @@ import {
   map,
   startWith,
 } from 'rxjs';
-import { DeadlineService } from '../../services/deadline.service';
+import { DeadlineResponse } from '../../services/deadline.service';
 
 interface TimerState {
   status: 'loading' | 'running' | 'timeout';
@@ -27,61 +28,18 @@ interface TimerState {
   selector: 'app-deadline-timer',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    @if (timerState$ | async; as state) {
-    <div class="deadline-timer" [class]="state.status">
-      @switch (state.status) { @case ('loading') {
-      <p class="message">Loading deadline...</p>
-      } @case ('running') {
-      <p class="message">Seconds left to deadline: {{ state.secondsLeft }}</p>
-      } @case ('timeout') {
-      <p class="message">Time's up!</p>
-      } }
-    </div>
-    }
-  `,
-  styles: [
-    `
-      .deadline-timer {
-        padding: 1.5rem;
-        border-radius: 8px;
-        text-align: center;
-        font-family: system-ui, sans-serif;
-
-        &.loading {
-          background-color: #f0f0f0;
-          color: #666;
-        }
-
-        &.running {
-          background-color: #e3f2fd;
-          color: #1565c0;
-        }
-
-        &.timeout {
-          background-color: #ffebee;
-          color: #c62828;
-        }
-
-        .message {
-          margin: 0;
-          font-size: 1.25rem;
-          font-weight: 500;
-        }
-      }
-    `,
-  ],
+  templateUrl: './deadline-timer.component.html',
+  styleUrls: ['./deadline-timer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeadlineTimerComponent implements OnInit, OnDestroy {
-  private readonly destroy$ = new Subject<void>();
+  @Input() deadlineData$!: Observable<DeadlineResponse>;
 
   timerState$!: Observable<TimerState>;
-
-  constructor(private readonly deadlineService: DeadlineService) {}
+  private readonly destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.timerState$ = this.deadlineService.getDeadline().pipe(
+    this.timerState$ = this.deadlineData$.pipe(
       takeUntil(this.destroy$),
       switchMap(({ secondsLeft }) =>
         timer(0, 1000).pipe(

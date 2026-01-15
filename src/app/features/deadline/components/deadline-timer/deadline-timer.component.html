@@ -1,0 +1,11 @@
+@if (timerState$ | async; as state) {
+<div class="deadline-timer" [class]="state.status">
+  @switch (state.status) { @case ('loading') {
+  <p class="message">Loading deadline...</p>
+  } @case ('running') {
+  <p class="message">Seconds left: {{ state.secondsLeft }}</p>
+  } @case ('timeout') {
+  <p class="message">Time's up!</p>
+  } }
+</div>
+}

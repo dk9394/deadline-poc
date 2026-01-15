@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, delay } from 'rxjs';
 
-interface DeadlineResponse {
+export interface DeadlineResponse {
   secondsLeft: number;
 }
 
