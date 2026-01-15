@@ -15,7 +15,7 @@ const cameras: HardwareCamera[] = [
   },
 ];
 
-function versatileSoftwareCamera(
+export function versatileSoftwareCamera(
   lightRange: number,
   subjectDistance: number,
   hardwareCameras: HardwareCamera[]
